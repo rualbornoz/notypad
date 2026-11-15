@@ -32,6 +32,18 @@ img { max-width: 100%; }
   --shadow: 0 6px 24px rgba(60, 50, 30, 0.1);
   --card-shadow: 0 1px 2px rgba(60, 50, 30, 0.06), 0 4px 14px rgba(60, 50, 30, 0.06);
   --track: #d8d2c0;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --t-tag: #c2255c;
+  --t-attr: #b45309;
+  --t-str: #2b8a3e;
+  --t-com: #7d7869;
+  --t-kw: #7048e8;
+  --t-num: #c2410c;
+  --t-fn: #1971c2;
+  --t-prop: #0b7285;
+  --c-html: #c2410c;
+  --c-css: #1d4ed8;
+  --c-js: #f5c400;
   --composer-shadow: 0 0 3px rgba(60, 50, 30, 0.06), 0 0 24px rgba(60, 50, 30, 0.12), 0 0 56px rgba(60, 50, 30, 0.1);
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
   --sans: "Maven Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -50,6 +62,15 @@ img { max-width: 100%; }
     --shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
     --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 4px 14px rgba(0, 0, 0, 0.4);
     --composer-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 28px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 0, 0, 0.5);
+    --track: #3a3a3a;
+    --t-tag: #ff7a9c;
+    --t-attr: #ffc069;
+    --t-str: #8ce99a;
+    --t-com: #8a8a8a;
+    --t-kw: #b197fc;
+    --t-num: #ffa94d;
+    --t-fn: #74c0fc;
+    --t-prop: #66d9e8;
     color-scheme: dark;
   }
 }
@@ -66,6 +87,15 @@ img { max-width: 100%; }
   --shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
   --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 4px 14px rgba(0, 0, 0, 0.4);
   --composer-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 28px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 0, 0, 0.5);
+  --track: #3a3a3a;
+  --t-tag: #ff7a9c;
+  --t-attr: #ffc069;
+  --t-str: #8ce99a;
+  --t-com: #8a8a8a;
+  --t-kw: #b197fc;
+  --t-num: #ffa94d;
+  --t-fn: #74c0fc;
+  --t-prop: #66d9e8;
   color-scheme: dark;
 }
 
@@ -131,6 +161,7 @@ button { -webkit-tap-highlight-color: transparent; }
   transition: transform 0.15s var(--ease);
 }
 .row:active { transform: scale(0.985); }
+.row { font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }
 .r-top { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
 .r-title { flex: 1; min-width: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .r-date { flex: none; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
@@ -193,6 +224,49 @@ button { -webkit-tap-highlight-color: transparent; }
   padding-top: 10px; padding-bottom: 16px; font-size: 17px; line-height: 1.5;
 }
 
+.note-read { flex: 1; min-height: 0; overflow-y: auto; padding-top: 10px; padding-bottom: 24px; font-size: 17px; line-height: 1.5; }
+.note-read h3 { margin: 0 0 10px; font-size: 22px; line-height: 1.2; font-weight: 700; letter-spacing: -0.01em; }
+.note-read p { margin: 0 0 16px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.note-read a { color: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Modo desarrollador ---------- */
+.switch.sm { width: 48px; height: 30px; margin: 0 0 4px; }
+.switch.sm .knob { width: 26px; height: 26px; }
+.switch.sm[aria-checked="true"] .knob { transform: translateX(18px); }
+.code-wrap { position: relative; flex: 1; min-width: 0; min-height: 0; display: flex; }
+.code-wrap textarea { position: relative; z-index: 1; }
+.code-hl {
+  display: none; position: absolute; inset: 0; margin: 0; overflow: hidden; pointer-events: none;
+  white-space: pre-wrap; overflow-wrap: break-word; word-break: normal; tab-size: 2; -moz-tab-size: 2;
+  font-family: var(--mono); font-size: 16px; line-height: 1.5; color: var(--fg);
+}
+.composer .code-hl { padding: 7px 0; }
+.note-hl { padding-top: 10px; padding-bottom: 16px; }
+.is-code .code-hl { display: block; }
+.is-code textarea {
+  font-family: var(--mono); font-size: 16px; line-height: 1.5; color: transparent; caret-color: var(--fg);
+  tab-size: 2; -moz-tab-size: 2; white-space: pre-wrap; overflow-wrap: break-word; word-break: normal;
+  scrollbar-width: none;
+}
+.is-code textarea::-webkit-scrollbar { display: none; }
+.is-code textarea::selection { background: rgba(128, 128, 128, 0.35); color: transparent; }
+.t-tag { color: var(--t-tag); }
+.t-attr { color: var(--t-attr); }
+.t-str { color: var(--t-str); }
+.t-com { color: var(--t-com); font-style: italic; }
+.t-kw { color: var(--t-kw); }
+.t-num { color: var(--t-num); }
+.t-fn { color: var(--t-fn); }
+.t-prop { color: var(--t-prop); }
+@media (min-width: 820px) { .is-code textarea, .code-hl { font-size: 15px; } }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 6px; }
+.note-chips { justify-content: center; margin: 8px 0 0; }
+.chip { font-size: 11px; line-height: 1; font-weight: 700; letter-spacing: 0.03em; padding: 4px 8px; border-radius: 999px; color: #ffffff; }
+.chip.html { background: var(--c-html); }
+.chip.css { background: var(--c-css); }
+.chip.js { background: var(--c-js); color: #1a1500; }
+
 /* ---------- Aviso ---------- */
 .toast {
   position: absolute; left: 50%; top: 12px; z-index: 20; transform: translate(-50%, -8px);
@@ -228,7 +302,7 @@ button { -webkit-tap-highlight-color: transparent; }
     transition: opacity 0.2s, visibility 0s linear 0.2s;
   }
   .app[data-view="note"] .pane-note { opacity: 1; transition: opacity 0.2s, visibility 0s; }
-  .note-nav, .note-text { padding-left: 20px; padding-right: 20px; }
+  .note-nav, .note-text, .note-read, .note-hl { padding-left: 20px; padding-right: 20px; }
   .lbl-m { display: none; }
   .lbl-d { display: inline; }
 }
@@ -262,7 +336,15 @@ button { -webkit-tap-highlight-color: transparent; }
     <h2 class="large gut compose-title">Nueva nota</h2>
     <div class="composer-wrap gut">
       <div class="composer">
-        <textarea id="compText" rows="2" placeholder="Escribe o pega aquí…" aria-label="Texto de la nueva nota"></textarea>
+        <div class="code-wrap" id="compWrap">
+          <pre class="code-hl" id="compHl" aria-hidden="true"></pre>
+          <textarea id="compText" rows="2" placeholder="Escribe o pega aquí…" aria-label="Texto de la nueva nota"></textarea>
+        </div>
+        <button class="switch sm" id="devSwitch" type="button" role="switch" aria-checked="false" aria-label="Modo desarrollador" title="Modo desarrollador">
+          <span class="knob">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 5l-3 14"/></svg>
+          </span>
+        </button>
         <button class="save" id="btnSave" type="button">Guardar</button>
       </div>
     </div>
@@ -285,8 +367,13 @@ button { -webkit-tap-highlight-color: transparent; }
         </button>
       </div>
     </div>
+    <div class="chips note-chips gut" id="noteChips" hidden></div>
     <p class="note-date" id="noteDate"></p>
-    <textarea class="note-text gut" id="noteText" placeholder="Nota vacía" spellcheck="true" aria-label="Texto de la nota"></textarea>
+    <div class="code-wrap" id="noteWrap">
+      <pre class="code-hl note-hl gut" id="noteHl" aria-hidden="true"></pre>
+      <textarea class="note-text gut" id="noteText" placeholder="Nota vacía" spellcheck="true" aria-label="Texto de la nota"></textarea>
+    </div>
+    <article class="note-read gut" id="noteRead" hidden></article>
   </section>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -300,21 +387,31 @@ button { -webkit-tap-highlight-color: transparent; }
   var listEl = $('list'), listScroll = $('listScroll');
   var compTa = $('compText'), btnSave = $('btnSave');
   var noteTa = $('noteText'), noteDate = $('noteDate');
+  var compWrap = $('compWrap'), compHl = $('compHl'), devSwitch = $('devSwitch');
+  var noteWrap = $('noteWrap'), noteHl = $('noteHl'), noteChips = $('noteChips');
   var btnBack = $('btnBack'), btnCopy = $('btnCopy'), btnDel = $('btnDel'), delLbl = $('delLbl');
   var toastEl = $('toast');
 
   function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
 
+  var ABOUT_NAME = 'Rubén Albornoz';
+  var ABOUT_URL = 'https://rualbornoz.framer.website/';
+  var ABOUT_TEXT = 'Cómo funciona / Sobre Notypad\n' +
+    'Escribe en la caja de abajo (o a la derecha en el computador) y toca Guardar. Toca una nota de la lista para abrirla en pantalla completa y seguir editándola; los cambios se guardan solos.\n\n' +
+    'Las notas se guardan en este navegador, sin cuenta ni registro.\n\n' +
+    'Modo desarrollador: activa el interruptor </> que está junto al botón Guardar para escribir o pegar código HTML, CSS y JS.\n\n' +
+    'Notypad Inc. | Creado por ' + ABOUT_NAME;
+
   function seed() {
     var now = Date.now(), H = 1000 * 60 * 60;
     return {
       draft: '',
+      dev: false,
       notes: [
-        { id: uid(), updated: now - 1000 * 60 * 5, text: 'Cómo funciona\nEscribe en la caja de abajo (o a la derecha en el computador) y toca Guardar. Toca una nota de la lista para abrirla en pantalla completa y seguir editándola; los cambios se guardan solos. Las notas se guardan en este navegador, sin cuenta ni registro.' },
+        { id: uid(), updated: now - 1000 * 60 * 5, about: true, text: ABOUT_TEXT },
         { id: uid(), updated: now - 3 * H, text: 'Ideas para el sitio\n- Buscador de notas\n- Etiquetas simples\n- Exportar todo a un archivo de texto' },
         { id: uid(), updated: now - 26 * H, text: 'Pegar texto largo\nEl editor acepta texto pegado de cualquier parte y conserva los saltos de línea.' },
-        { id: uid(), updated: now - 4 * 24 * H, text: 'Lista de compras\nCafé, pan integral, paltas, limones' }
-      ]
+        { id: uid(), updated: now - 4 * 24 * H, langs: ['html'], text: '<!-- Ejemplo de HTML -->\n<article class="tarjeta">\n  <h1>Hola, Notypad</h1>\n  <p>Escribe o pega tu código aquí.</p>\n  <a href="https://example.com">Ver más</a>\n</article>' }      ]
     };
   }
 
@@ -324,7 +421,19 @@ button { -webkit-tap-highlight-color: transparent; }
       if (!raw) return null;
       var s = JSON.parse(raw);
       if (!s || !Array.isArray(s.notes)) return null;
-      return { notes: s.notes, draft: typeof s.draft === 'string' ? s.draft : '' };
+      s.notes.forEach(function (n) {
+        if (Array.isArray(n.langs)) {
+          n.langs = n.langs.filter(function (l) { return l === 'html' || l === 'css' || l === 'js'; });
+          if (!n.langs.length) delete n.langs;
+        } else { delete n.langs; }
+        if (!n.about && typeof n.text === 'string' && n.text.indexOf('Cómo funciona\n') === 0 && n.text.indexOf('Toca una nota de la lista') > -1) {
+          n.about = true;
+          n.text = ABOUT_TEXT;
+        }
+        if (n.about) n.text = ABOUT_TEXT;
+      });
+      s.notes = s.notes.filter(function (n) { return n.text !== 'Lista de compras\nCafé, pan integral, paltas, limones'; });
+      return { notes: s.notes, draft: typeof s.draft === 'string' ? s.draft : '', dev: !!s.dev };
     } catch (e) { return null; }
   }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
@@ -334,6 +443,152 @@ button { -webkit-tap-highlight-color: transparent; }
   save();
 
   function isDesktop() { return !!(window.matchMedia && window.matchMedia('(min-width: 820px)').matches); }
+
+  /* ---------- Resaltado de código (HTML, CSS, JS) ---------- */
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function sp(cls, s) { return '<span class="t-' + cls + '">' + esc(s) + '</span>'; }
+  function tok(code, re, pick) {
+    var out = '', last = 0, m;
+    re.lastIndex = 0;
+    while ((m = re.exec(code))) {
+      if (m[0] === '') { re.lastIndex++; continue; }
+      out += esc(code.slice(last, m.index));
+      var c = pick(m);
+      out += c ? sp(c, m[0]) : esc(m[0]);
+      last = m.index + m[0].length;
+    }
+    return out + esc(code.slice(last));
+  }
+
+  var JS_RE = /(\/\/[^\n]*|\/\*[\s\S]*?(?:\*\/|$))|("(?:\\.|[^"\\\n])*"?|'(?:\\.|[^'\\\n])*'?|`(?:\\[\s\S]|[^`\\])*`?)|(\b\d[\d_]*(?:\.\d+)?\b)|\b(const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|new|class|extends|import|export|from|default|try|catch|finally|throw|async|await|typeof|instanceof|in|of|this|super|yield|delete|void|true|false|null|undefined)\b|([A-Za-z_$][\w$]*)(?=\s*\()/g;
+  function hlJS(c) {
+    return tok(c, JS_RE, function (m) { return m[1] ? 'com' : m[2] ? 'str' : m[3] ? 'num' : m[4] ? 'kw' : 'fn'; });
+  }
+
+  var SEL_RE = /(\.[\w-]+|#[\w-]+)|(::?[\w-]+(?:\([^)]*\))?)|(\[[^\]]*\])|([a-zA-Z][\w-]*)|(\*)/g;
+  var VAL_RE = /(!important)|(#[0-9a-fA-F]{3,8}\b)|(-?(?:\d+\.?\d*|\.\d+)(?:px|rem|em|%|vh|vw|vmin|vmax|ch|ms|s|deg|fr|pt)?)|([a-zA-Z_-][\w-]*)(?=\()|([a-zA-Z_-][\w-]*)/g;
+  function cssVal(b) {
+    return tok(b, VAL_RE, function (m) { return m[1] ? 'kw' : (m[2] || m[3]) ? 'num' : m[4] ? 'fn' : null; });
+  }
+  function cssProp(b) { return tok(b, /[\w-]+/g, function () { return 'prop'; }); }
+  function cssSel(b) {
+    var at = /^(\s*)(@[\w-]+)([\s\S]*)$/.exec(b);
+    if (at) return esc(at[1]) + sp('kw', at[2]) + cssVal(at[3]);
+    return tok(b, SEL_RE, function (m) { return m[1] ? 'attr' : m[2] ? 'fn' : m[3] ? 'str' : 'tag'; });
+  }
+  function hlCSS(code) {
+    var out = '', buf = '', i = 0, n = code.length, stack = [], mode = 'prop';
+    function inDecl() { return stack.length > 0 && stack[stack.length - 1] === 'decl'; }
+    function kind() { return inDecl() ? (mode === 'prop' ? 'prop' : 'val') : 'sel'; }
+    function flush(k) {
+      if (!buf) return;
+      out += k === 'sel' ? cssSel(buf) : k === 'prop' ? cssProp(buf) : cssVal(buf);
+      buf = '';
+    }
+    while (i < n) {
+      var ch = code.charAt(i);
+      if (ch === '/' && code.charAt(i + 1) === '*') {
+        flush(kind());
+        var e = code.indexOf('*/', i + 2);
+        e = e < 0 ? n : e + 2;
+        out += sp('com', code.slice(i, e)); i = e; continue;
+      }
+      if (ch === '"' || ch === "'") {
+        flush(kind());
+        var j = i + 1;
+        while (j < n && code.charAt(j) !== ch && code.charAt(j) !== '\n') { if (code.charAt(j) === '\\') j++; j++; }
+        if (code.charAt(j) === ch) j++;
+        if (j > n) j = n;
+        out += sp('str', code.slice(i, j)); i = j; continue;
+      }
+      if (ch === '{') {
+        var pre = buf.trim();
+        var rules = !inDecl() && /^@(media|supports|layer|container|document|scope|starting-style)\b/i.test(pre);
+        flush('sel'); stack.push(rules ? 'rules' : 'decl'); mode = 'prop'; out += ch;
+      } else if (ch === '}') {
+        flush(kind()); stack.pop(); mode = 'prop'; out += ch;
+      } else if (ch === ';') {
+        flush(kind()); mode = 'prop'; out += ch;
+      } else if (ch === ':' && inDecl() && mode === 'prop') {
+        flush('prop'); mode = 'val'; out += ch;
+      } else { buf += ch; }
+      i++;
+    }
+    flush(kind());
+    return out;
+  }
+
+  var ATTR_RE = /("[^"]*"?|'[^']*'?)|([^\s"'=<>\/]+)/g;
+  function hlTag(t) {
+    if (t.indexOf('<!--') === 0) return sp('com', t);
+    if (/^<!doctype/i.test(t)) return sp('kw', t);
+    var m = /^(<\/?)([A-Za-z][\w:-]*)([\s\S]*?)(\/?>?)$/.exec(t);
+    if (!m) return esc(t);
+    return sp('tag', m[1] + m[2]) + tok(m[3], ATTR_RE, function (a) { return a[1] ? 'str' : 'attr'; }) + (m[4] ? sp('tag', m[4]) : '');
+  }
+  function hlHTML(code) {
+    var out = '', last = 0, m;
+    var re = /<!--[\s\S]*?(?:-->|$)|<!doctype[^>]*>?|<\/?[A-Za-z][^>]*>?/gi;
+    while ((m = re.exec(code))) {
+      if (m[0] === '') { re.lastIndex++; continue; }
+      out += esc(code.slice(last, m.index)) + hlTag(m[0]);
+      last = m.index + m[0].length;
+      var nm = /^<(style|script)\b/i.exec(m[0]);
+      if (nm && m[0].charAt(m[0].length - 1) === '>' && m[0].charAt(m[0].length - 2) !== '/') {
+        var cre = new RegExp('</' + nm[1], 'ig');
+        cre.lastIndex = last;
+        var cm = cre.exec(code);
+        var ci = cm ? cm.index : code.length;
+        var inner = code.slice(last, ci);
+        out += nm[1].toLowerCase() === 'style' ? hlCSS(inner) : hlJS(inner);
+        last = ci;
+        re.lastIndex = ci;
+      }
+    }
+    return out + esc(code.slice(last));
+  }
+
+  var RE_HTML = /<!doctype\s+html|<\/?[A-Za-z][\w:-]*(?:\s[^<>]*)?\/?>/i;
+  var RE_JS = /\b(?:const|let|var)\s+[\w$]+\s*(?:=|;)|\bfunction\b\s*[\w$]*\s*\(|=>|\bconsole\.\w+|\b(?:document|window)\.\w+|\b(?:if|for|while|switch)\s*\([^)\n]*\)\s*\{?|\bimport\s+[\w{*][^\n]*\sfrom\s|\bexport\s+(?:default|const|function|class)\b|\basync\s+function\b|\bawait\s+\w|\b[\w$.]+\([^)\n]*\)\s*;/;
+  function looksCSS(t) {
+    if (/\b(?:function|const|let|var|return)\b|=>|console\./.test(t)) return false;
+    return /[^{}]+\{\s*[-\w]+\s*:\s*[^{};]+(?:;|\s*\})/.test(t);
+  }
+  function detect(t) {
+    var langs = [];
+    if (RE_HTML.test(t)) {
+      langs.push('html');
+      if (/<style[\s>]/i.test(t)) langs.push('css');
+      if (/<script[\s>]/i.test(t)) langs.push('js');
+    } else if (looksCSS(t)) { langs.push('css'); }
+    else if (RE_JS.test(t)) { langs.push('js'); }
+    return langs;
+  }
+  function highlight(t, langs) {
+    if (!langs || !langs.length) return esc(t);
+    if (langs[0] === 'html') return hlHTML(t);
+    if (langs[0] === 'css') return hlCSS(t);
+    return hlJS(t);
+  }
+  function setHl(ta, hl, langs) {
+    hl.innerHTML = highlight(ta.value, langs) + '​';
+    hl.scrollTop = ta.scrollTop;
+  }
+  function chip(l) {
+    var c = document.createElement('span');
+    c.className = 'chip ' + l; c.textContent = l;
+    return c;
+  }
+  function tabInsert(ta, e) {
+    if (e.key !== 'Tab' || e.shiftKey || e.ctrlKey || e.metaKey || e.altKey) return;
+    e.preventDefault();
+    var ok = false;
+    try { ok = document.execCommand && document.execCommand('insertText', false, '  '); } catch (err) { ok = false; }
+    if (!ok) {
+      ta.setRangeText('  ', ta.selectionStart, ta.selectionEnd, 'end');
+      ta.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  }
 
   /* ---------- Fechas ---------- */
   var fmtTime = new Intl.DateTimeFormat('es-CL', { hour: '2-digit', minute: '2-digit' });
@@ -403,6 +658,11 @@ button { -webkit-tap-highlight-color: transparent; }
           var b = document.createElement('button');
           b.type = 'button'; b.className = 'row'; b.dataset.id = n.id;
           if (n.id === activeId) b.setAttribute('aria-current', 'true');
+          if (n.langs && n.langs.length) {
+            var cw = document.createElement('div'); cw.className = 'chips';
+            n.langs.forEach(function (l) { cw.appendChild(chip(l)); });
+            b.appendChild(cw);
+          }
           var top = document.createElement('div'); top.className = 'r-top';
           var t = document.createElement('span'); t.className = 'r-title'; t.textContent = p.title;
           var d = document.createElement('span'); d.className = 'r-date'; d.textContent = rowDate(n.updated);
@@ -437,11 +697,53 @@ button { -webkit-tap-highlight-color: transparent; }
     if (!n) return;
     activeId = id;
     noteTa.value = n.text;
+    showNoteBody(n);
+    applyNoteCode(n);
     noteDate.textContent = fmtLong.format(new Date(n.updated));
     resetDelete();
     renderList();
     applyView();
-    if (isDesktop()) noteTa.focus();
+    if (isDesktop() && !n.about) noteTa.focus();
+  }
+
+  function applyNoteCode(n) {
+    var langs = n.langs || [];
+    noteWrap.classList.toggle('is-code', langs.length > 0);
+    noteTa.spellcheck = !langs.length;
+    noteChips.textContent = '';
+    langs.forEach(function (l) { noteChips.appendChild(chip(l)); });
+    noteChips.hidden = !langs.length;
+    if (langs.length) setHl(noteTa, noteHl, langs);
+  }
+
+  /* Nota "Sobre Notypad": se muestra como página de lectura para poder tener un enlace */
+  var noteRead = $('noteRead');
+  function showNoteBody(n) {
+    noteRead.textContent = '';
+    if (!n.about) { noteWrap.hidden = false; noteRead.hidden = true; return; }
+    noteWrap.hidden = true;
+    noteRead.hidden = false;
+    var chunks = n.text.split('\n\n');
+    var firstLines = chunks[0].split('\n');
+    var h = document.createElement('h3');
+    h.textContent = firstLines.shift();
+    noteRead.appendChild(h);
+    var rest = [firstLines.join('\n')].concat(chunks.slice(1));
+    rest.forEach(function (txt) {
+      if (!txt) return;
+      var p = document.createElement('p');
+      var i = txt.indexOf(ABOUT_NAME);
+      if (i < 0) { p.textContent = txt; }
+      else {
+        p.appendChild(document.createTextNode(txt.slice(0, i)));
+        var a = document.createElement('a');
+        a.href = ABOUT_URL; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        a.textContent = ABOUT_NAME;
+        p.appendChild(a);
+        p.appendChild(document.createTextNode(txt.slice(i + ABOUT_NAME.length)));
+      }
+      noteRead.appendChild(p);
+    });
   }
 
   function closeNote() {
@@ -465,21 +767,42 @@ button { -webkit-tap-highlight-color: transparent; }
   }
   function syncSave() { btnSave.disabled = !compTa.value.trim(); }
 
+  function renderComposer() {
+    var on = !!state.dev;
+    compWrap.classList.toggle('is-code', on);
+    devSwitch.setAttribute('aria-checked', on ? 'true' : 'false');
+    compTa.placeholder = on ? 'Pega o escribe HTML, CSS o JS…' : 'Escribe o pega aquí…';
+    compTa.spellcheck = !on;
+    if (on) setHl(compTa, compHl, detect(compTa.value));
+    autosize();
+  }
+  devSwitch.addEventListener('click', function () {
+    state.dev = !state.dev;
+    save();
+    renderComposer();
+    if (isDesktop()) compTa.focus();
+  });
+
   compTa.addEventListener('input', function () {
     state.draft = compTa.value;
     save(); syncSave(); autosize();
+    if (state.dev) setHl(compTa, compHl, detect(compTa.value));
   });
   compTa.addEventListener('keydown', function (e) {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); saveNew(); }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); saveNew(); return; }
+    if (state.dev) tabInsert(compTa, e);
   });
+  compTa.addEventListener('scroll', function () { compHl.scrollTop = compTa.scrollTop; });
 
   function saveNew() {
     var v = compTa.value;
     if (!v.trim()) return;
-    state.notes.unshift({ id: uid(), text: v, updated: Date.now() });
+    var note = { id: uid(), text: v, updated: Date.now() };
+    if (state.dev) { var found = detect(v); if (found.length) note.langs = found; }
+    state.notes.unshift(note);
     state.draft = '';
     compTa.value = '';
-    save(); syncSave(); autosize();
+    save(); syncSave(); renderComposer();
     renderList();
     listScroll.scrollTop = 0;
     if (!isDesktop()) compTa.blur();
@@ -494,11 +817,22 @@ button { -webkit-tap-highlight-color: transparent; }
     if (!n) return;
     n.text = noteTa.value;
     n.updated = Date.now();
+    if (n.langs) {
+      var found = detect(n.text);
+      if (found.length) n.langs = found;
+      applyNoteCode(n);
+    }
     save();
     noteDate.textContent = fmtLong.format(new Date(n.updated));
     clearTimeout(renderTimer);
     renderTimer = setTimeout(renderList, 200);
   });
+
+  noteTa.addEventListener('keydown', function (e) {
+    var n = getActive();
+    if (n && n.langs) tabInsert(noteTa, e);
+  });
+  noteTa.addEventListener('scroll', function () { noteHl.scrollTop = noteTa.scrollTop; });
 
   listEl.addEventListener('click', function (e) {
     var row = e.target.closest ? e.target.closest('.row') : null;
@@ -590,7 +924,7 @@ button { -webkit-tap-highlight-color: transparent; }
   renderList();
   applyView();
   syncSave();
-  autosize();
+  renderComposer();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(autosize);
 })();
 </script>
